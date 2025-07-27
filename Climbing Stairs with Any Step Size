@@ -1,0 +1,76 @@
+You are climbing a staircase with n total steps. You are allowed to take only steps defined in the given list steps. Your task is to compute the total number of distinct ways to reach the top (i.e., step n) starting from step 0.
+
+You can take multiple steps from the list in any order, and reuse the same step size multiple times.
+
+📥 Input:
+n (1 ≤ n ≤ 10⁴): total number of steps.
+
+steps: a list of integers where 1 ≤ steps[i] ≤ n. All elements are positive and unique.
+
+📤 Output:
+Return the total number of ways to reach step n using any combination of the given steps.
+
+Input:
+n = 5
+steps = [1, 3, 5]
+
+Output:
+5
+
+Explanation:
+The valid ways to reach step 5 are:
+- 1+1+1+1+1
+- 1+1+3
+- 1+3+1
+- 3+1+1
+- 5
+
+
+
+
+
+
+Input:
+n = 4
+steps = [1, 2]
+
+Output:
+5
+
+Explanation:
+The valid ways to reach step 4 are:
+- 1+1+1+1
+- 1+1+2
+- 1+2+1
+- 2+1+1
+- 2+2
+
+
+
+
+🧠 Constraints:
+The order of steps matters (1+3 ≠ 3+1).
+
+The steps list may include any custom jump sizes.
+
+The same step size can be used multiple times.
+
+def countWays(n, steps):
+    dp = [-1] * (n + 1)
+    
+    def helper(i):
+        if i == n:
+            return 1
+        if i > n:
+            return 0
+        if dp[i] != -1:
+            return dp[i]
+        
+        total = 0
+        for s in steps:
+            total += helper(i + s)
+        
+        dp[i] = total
+        return dp[i]
+    
+    return helper(0)
